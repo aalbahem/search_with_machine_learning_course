@@ -7,6 +7,8 @@ import csv
 
 # Useful if you want to perform stemming.
 import nltk
+from nltk.tokenize import word_tokenize
+
 stemmer = nltk.stem.PorterStemmer()
 
 categories_file_name = r'/workspace/datasets/product_data/categories/categories_0001_abcat0010000_to_pcmcat99300050000.xml'
@@ -49,6 +51,17 @@ df = pd.read_csv(queries_file_name)[['category', 'query']]
 df = df[df['category'].isin(categories)]
 
 # IMPLEMENT ME: Convert queries to lowercase, and optionally implement other normalization, like stemming.
+
+def normalize(query):
+    normalized_query = str(query).lower()
+
+    tokens = word_tokenize(text)
+    for i in range(0,len(tokens)):
+        tokens [i] = stemmer.setm(tokens[i])
+    
+    normalized_query = " ".join(tokens)
+
+df ['query'] = df['query'].apply(normalize)
 
 # IMPLEMENT ME: Roll up categories to ancestors to satisfy the minimum number of queries per category.
 
